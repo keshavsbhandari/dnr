@@ -62,6 +62,7 @@ Now calculating the mean each sentence in VT
 
 
 VT_   
+
       =   [
           mean([v1 o t1, v2 o t2, ....... ]),
           mean([v1 o t1, v2 o t2, ..............]),
@@ -72,19 +73,20 @@ VT_
 Now getting mean of VT_ which represents the mean of user digested news
 
 V_  
-    =   mean(VT_)
+
+      =   mean(VT_)
 
 Now Suppose S is the collection of news from where recommendation is to be made we can convert it into vector represents using word2vec using following
 
 S   
 
-    =   [
-        [v1, v2, ....... ],
-        [v1, v2, ..............],
-        [v1, v2, ...................],
-        ....
-        ....
-        ]
+      =   [
+          [v1, v2, ....... ],
+          [v1, v2, ..............],
+          [v1, v2, ...................],
+          ....
+          ....
+          ]
 
 Now we can measure similarity
 
