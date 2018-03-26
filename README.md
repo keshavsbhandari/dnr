@@ -10,7 +10,9 @@ user is already provided
 
 This project is a part of my research for text based recommendation
 
-W   =   [
+W   
+
+    =   [
         [w1, w2, ....... ],
         [w1, w2, ..............],
         [w1,w2,  ...................],
@@ -20,7 +22,9 @@ W   =   [
 
 above document can be converted into vector from using word2vec model
 
-V   =   word2vec(W)
+V   
+
+    =   word2vec(W)
     =   [
         [v1, v2, ....... ],
         [v1, v2, ..............],
@@ -30,7 +34,9 @@ V   =   word2vec(W)
         ]
 Calculating tf-idf score for each words in document
 
-T   =   tfidf(V)
+T   
+
+    =   tfidf(V)
 
     =   [
         [t1, t2, ....... ],
@@ -39,9 +45,12 @@ T   =   tfidf(V)
         ....
         ....
         ]
+
 Getting vector using Hadamard product of V and T
 
-VT  =   [
+VT  
+
+    =   [
         [v1 o t1, v2 o t2, ....... ],
         [v1 o t1, v2 o t2, ..............],
         [v1 o t1, v2 o t2, ...................],        
@@ -51,20 +60,25 @@ VT  =   [
 
 Now calculating the mean each sentence in VT
 
-VT_ = [
-      mean([v1 o t1, v2 o t2, ....... ]),
-      mean([v1 o t1, v2 o t2, ..............]),
-      mean([v1 o t1, v2 o t2, ...................]),        
-      ....
-      ....
-      ]
+
+VT_   
+      =   [
+          mean([v1 o t1, v2 o t2, ....... ]),
+          mean([v1 o t1, v2 o t2, ..............]),
+          mean([v1 o t1, v2 o t2, ...................]),        
+          ....
+          ....
+          ]
 Now getting mean of VT_ which represents the mean of user digested news
 
-V_  =   mean(VT_)
+V_  
+    =   mean(VT_)
 
 Now Suppose S is the collection of news from where recommendation is to be made we can convert it into vector represents using word2vec using following
 
-S   =   [
+S   
+
+    =   [
         [v1, v2, ....... ],
         [v1, v2, ..............],
         [v1, v2, ...................],
@@ -74,7 +88,9 @@ S   =   [
 
 Now we can measure similarity
 
-sim(S,V_)   =   [
+sim(S,V_)   
+
+            =   [
                 [score],
                 [score],
                 [score],
@@ -83,4 +99,4 @@ sim(S,V_)   =   [
                 ]
 Now depending upon the top score news can be recommended
 
-This is just an implementation of my research for building content-based recommendation engine using word2vec model obtain from RNN 
+This is just an implementation of my research for building content-based recommendation engine using word2vec model obtain from RNN
