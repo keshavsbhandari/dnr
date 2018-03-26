@@ -1,5 +1,3 @@
-# @copyright: AlertAvert.com (c) 2016. All rights reserved.
-
 from setuptools import setup
 
 try:
@@ -21,15 +19,12 @@ setup(name='dnr',
       long_description=long_description,
       version='0.1',
       url='https://github.com/keshavsbhandari/dnr',
+      download_url = 'https://github.com/keshavsbhandari/dnr/archive/master.zip',
       author='Keshav Bhandari',
       author_email='keshav.s.bhandari@gmail.com',
       license='copyright',
-      classifiers=[
-          'Development Status :: 1 - Beta',
-          'Intended Audience :: AI Developer/Data Scientist/Software Developer',
-          'License :: OSI Approved :: None',
-          'Programming Language :: Python :: 3'
-      ],
+      keywords = ['recommendation', 'recommendersystem', 'rnn','lstm','word2vec','gensim'], # arbitrary keywords
+      classifiers=[],
       packages=['dnr'],
       install_requires=[
             'gensim==3.4.0',
