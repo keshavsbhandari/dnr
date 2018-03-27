@@ -95,7 +95,9 @@ class Recommendation(object):
         latestVec={}
         for key,values in newNews.items():
             x = np.mean(np.array(list(map(lambda x:self.getWordVec(x,1),values.split()))),axis=0)
-            latestVec[key] = 1 - spatial.distance.cosine(x,self.V)
+            sim = 1 - spatial.distance.cosine(x,self.V)
+            dis = np.arccos(sim)/np.pi
+            latestVec[key] = 1 - dis
         maxRecom = min(len(newNews),n)
         self.recommendation = sorted(latestVec.items(), key=operator.itemgetter(1),reverse=True)[:maxRecom]
 
