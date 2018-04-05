@@ -37,7 +37,7 @@ class Recommendation(object):
     # This is an example for nepali text but you can do this for english or anyother language
     def addLatestRead(self,newsList):
         self.newsList = newsList
-        self.computeTfIdfScore([*map(lambda x:x.split(),self.newsList)])
+        self.computeTfIdfScore(list(map(lambda x:x.split(),self.newsList)))
 
     #3. Compute tfidfScore
     #this is step by step process to calculate tf-idf score for the documents in user LatestNewsRead from above
