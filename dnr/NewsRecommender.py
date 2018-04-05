@@ -101,4 +101,4 @@ class Recommendation(object):
         maxRecom = min(len(newNews),n)
         self.recommendation = sorted(latestVec.items(), key=operator.itemgetter(1),reverse=True)[:maxRecom]
 
-        return [*map(lambda x:x[0],self.recommendation)]
+        return list(map(lambda x:x[0],self.recommendation))
