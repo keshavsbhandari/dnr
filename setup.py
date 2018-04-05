@@ -17,7 +17,7 @@ except ImportError:
 setup(name='dnr',
       description='RNN based word2vec implementation for news recommendation',
       long_description=long_description,
-      version='0.4',
+      version='0.5',
       url='https://github.com/keshavsbhandari/dnr',
       download_url = 'https://github.com/keshavsbhandari/dnr/archive/master.zip',
       author='Keshav Bhandari',
@@ -27,9 +27,9 @@ setup(name='dnr',
       classifiers=[],
       packages=['dnr'],
       install_requires=[
-            'gensim==3.4.0',
-            'numpy==1.14.2',
-            'scipy==1.0.1'
+            'gensim<=3.4.0',
+            'numpy<=1.14.2',
+            'scipy<=1.0.1'
       ],
       entry_points={}
       )
