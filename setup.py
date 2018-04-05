@@ -17,7 +17,7 @@ except ImportError:
 setup(name='dnr',
       description='RNN based word2vec implementation for news recommendation',
       long_description=long_description,
-      version='0.6',
+      version='0.8',
       url='https://github.com/keshavsbhandari/dnr',
       download_url = 'https://github.com/keshavsbhandari/dnr/archive/master.zip',
       author='Keshav Bhandari',
