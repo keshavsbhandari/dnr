@@ -12,12 +12,11 @@ class Recommendation(object):
     #follow : https://radimrehurek.com/gensim/models/word2vec.html
     #Interestingly you can do this for any language
     #Initialization of Model
-    def __init__(self,model,path_to_temp = '/tmp/'):
-        self.path_to_temp = path_to_temp
+    def __init__(self,model):
         self.model = model
 
     def __version__(self):
-        return '0.8'
+        return '0.9'
 
     #get WordVec embeddings and multiply embeddings with respective tfidf score
     #words that doesn't exist in model are not updated yet
