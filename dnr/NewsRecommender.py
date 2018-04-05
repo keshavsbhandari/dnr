@@ -4,6 +4,7 @@ import operator
 import re
 from scipy import spatial
 import time
+import tempfile
 
 class Recommendation(object):
 
@@ -46,64 +47,76 @@ class Recommendation(object):
     #finally the vector representing the entire latestread as mean vector will be calculated
     #for detail please refer to readme.md file
     def computeTfIdfScore(self,tweets):
+        '''
         tempfile = str(time.time()).replace('.','')
         tempdict = self.path_to_temp + tempfile +'.dict'
         tempmm = self.path_to_temp + tempfile +'.mm'
         tempindex = self.path_to_temp + tempfile +'.index'
-        # STEP 1 : Compile corpus and dictionary
-        # create dictionary (index of each element)
-        dictionary = corpora.Dictionary(tweets)
-        # dictionary.save('/tmp/tweets.dict') # store the dictionary, for future reference
-        dictionary.save(tempdict) # store the dictionary, for future reference
-
-        # compile corpus (vectors number of times each elements appears)
-        raw_corpus = [dictionary.doc2bow(t) for t in tweets]
-        # corpora.MmCorpus.serialize('/tmp/tweets.mm', raw_corpus) # store to disk
-        corpora.MmCorpus.serialize(tempmm, raw_corpus) # store to disk
-
-        # STEP 2 : similarity between corpuses
-        # dictionary = corpora.Dictionary.load('/tmp/tweets.dict')
-        dictionary = corpora.Dictionary.load(tempdict)
-
-        # corpus = corpora.MmCorpus('/tmp/tweets.mm')
-        corpus = corpora.MmCorpus(tempmm)
-
-        # Transform Text with TF-IDF
-        tfidf = models.TfidfModel(corpus) # step 1 -- initialize a model
-
-        # corpus tf-idf
-        corpus_tfidf = tfidf[corpus]
-
-        # STEP 3 : Create similarity matrix of all files
-        index = similarities.MatrixSimilarity(tfidf[corpus])
-        # index.save('/tmp/deerwester.index')
-        index.save(tempindex)
-        # index = similarities.MatrixSimilarity.load('/tmp/deerwester.index')
-        index = similarities.MatrixSimilarity.load(tempindex)
-        #sims = index[corpus_tfidf] #For thiss purpose we don't use similarity matrix
-
-        self.index = index.index
-
-        reverseDict = {j:i for i,j in dict(dictionary).items()}
-
-        tweetsIdf=[]
-
-        for t,i in zip(tweets,self.index):
-            tweetsIdf.append(list(map(lambda x:i[reverseDict[x]],t)))
-
-        tweetsVec = []
-        for tw,idf in zip(tweets,tweetsIdf):
-            t = np.array(list(map(lambda u,v:self.getWordVec(u,v),tw,idf)))
-            tweetsVec.append(np.mean(t,axis=0))
-        tVec = np.array(tweetsVec)
-        self.V = np.mean(tVec,axis=0)
+        '''
+        #trying with tempfile
+        tempdict = tempfile.TemporaryFile()
+        tempmm = tempfile.TemporaryFile()
+        tempindex = tempfile.TemporaryFile()
+        #end trying with tempfile
         try:
-            os.remove(tempdict)
-            os.remove(tempmm)
-            os.remove(tempindex)
-        except:
-            pass
+            # STEP 1 : Compile corpus and dictionary
+            # create dictionary (index of each element)
+            dictionary = corpora.Dictionary(tweets)
+            # dictionary.save('/tmp/tweets.dict') # store the dictionary, for future reference
+            dictionary.save(tempdict) # store the dictionary, for future reference
 
+            # compile corpus (vectors number of times each elements appears)
+            raw_corpus = [dictionary.doc2bow(t) for t in tweets]
+            # corpora.MmCorpus.serialize('/tmp/tweets.mm', raw_corpus) # store to disk
+            corpora.MmCorpus.serialize(tempmm, raw_corpus) # store to disk
+
+            # STEP 2 : similarity between corpuses
+            # dictionary = corpora.Dictionary.load('/tmp/tweets.dict')
+            dictionary = corpora.Dictionary.load(tempdict)
+
+            # corpus = corpora.MmCorpus('/tmp/tweets.mm')
+            corpus = corpora.MmCorpus(tempmm)
+
+            # Transform Text with TF-IDF
+            tfidf = models.TfidfModel(corpus) # step 1 -- initialize a model
+
+            # corpus tf-idf
+            corpus_tfidf = tfidf[corpus]
+
+            # STEP 3 : Create similarity matrix of all files
+            index = similarities.MatrixSimilarity(tfidf[corpus])
+            # index.save('/tmp/deerwester.index')
+            index.save(tempindex)
+            # index = similarities.MatrixSimilarity.load('/tmp/deerwester.index')
+            index = similarities.MatrixSimilarity.load(tempindex)
+            #sims = index[corpus_tfidf] #For thiss purpose we don't use similarity matrix
+
+            self.index = index.index
+
+            reverseDict = {j:i for i,j in dict(dictionary).items()}
+
+            tweetsIdf=[]
+
+            for t,i in zip(tweets,self.index):
+                tweetsIdf.append(list(map(lambda x:i[reverseDict[x]],t)))
+
+                tweetsVec = []
+                for tw,idf in zip(tweets,tweetsIdf):
+                    t = np.array(list(map(lambda u,v:self.getWordVec(u,v),tw,idf)))
+                    tweetsVec.append(np.mean(t,axis=0))
+                    tVec = np.array(tweetsVec)
+                    self.V = np.mean(tVec,axis=0)
+
+        except Exception as e:
+            print(e)
+        '''
+        tempfiles = [k for k in os.listdir(self.path_to_temp) if k.startswith(tempfile)]
+        for tfile in tempfiles:
+            try:
+                os.remove(tfile)
+            except Exception as e:
+                print(e)
+        '''
 
     #4. Get Recommendation
     #Finally this will return recommended index based on cosine distance
