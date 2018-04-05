@@ -52,43 +52,43 @@ class Recommendation(object):
         tempdict = self.path_to_temp + tempfile +'.dict'
         tempmm = self.path_to_temp + tempfile +'.mm'
         tempindex = self.path_to_temp + tempfile +'.index'
-        '''
         #trying with tempfile
         tempdict = tempfile.TemporaryFile()
         tempmm = tempfile.TemporaryFile()
         tempindex = tempfile.TemporaryFile()
         #end trying with tempfile
+        '''
         try:
             # STEP 1 : Compile corpus and dictionary
             # create dictionary (index of each element)
             dictionary = corpora.Dictionary(tweets)
             # dictionary.save('/tmp/tweets.dict') # store the dictionary, for future reference
-            dictionary.save(tempdict) # store the dictionary, for future reference
+            # dictionary.save(tempdict) # store the dictionary, for future reference
 
             # compile corpus (vectors number of times each elements appears)
             raw_corpus = [dictionary.doc2bow(t) for t in tweets]
             # corpora.MmCorpus.serialize('/tmp/tweets.mm', raw_corpus) # store to disk
-            corpora.MmCorpus.serialize(tempmm, raw_corpus) # store to disk
+            # corpora.MmCorpus.serialize(tempmm, raw_corpus) # store to disk
 
             # STEP 2 : similarity between corpuses
             # dictionary = corpora.Dictionary.load('/tmp/tweets.dict')
-            dictionary = corpora.Dictionary.load(tempdict)
+            # dictionary = corpora.Dictionary.load(tempdict)
 
             # corpus = corpora.MmCorpus('/tmp/tweets.mm')
-            corpus = corpora.MmCorpus(tempmm)
+            # corpus = corpora.MmCorpus(tempmm)
+            corpus = raw_corpus
 
             # Transform Text with TF-IDF
             tfidf = models.TfidfModel(corpus) # step 1 -- initialize a model
-
             # corpus tf-idf
             corpus_tfidf = tfidf[corpus]
 
             # STEP 3 : Create similarity matrix of all files
             index = similarities.MatrixSimilarity(tfidf[corpus])
             # index.save('/tmp/deerwester.index')
-            index.save(tempindex)
+            # index.save(tempindex)
             # index = similarities.MatrixSimilarity.load('/tmp/deerwester.index')
-            index = similarities.MatrixSimilarity.load(tempindex)
+            # index = similarities.MatrixSimilarity.load(tempindex)
             #sims = index[corpus_tfidf] #For thiss purpose we don't use similarity matrix
 
             self.index = index.index
