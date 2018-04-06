@@ -5,6 +5,7 @@ import re
 from scipy import spatial
 import time
 import tempfile
+import math
 
 class Recommendation(object):
 
@@ -16,7 +17,7 @@ class Recommendation(object):
         self.model = model
 
     def __version__(self):
-        return '0.9.2'
+        return '0.9.3'
 
     #get WordVec embeddings and multiply embeddings with respective tfidf score
     #words that doesn't exist in model are not updated yet
@@ -43,7 +44,11 @@ class Recommendation(object):
     def addLatestRead(self,newsList):
         self.newsList = newsList
         if len(newsList)==1:
-            self.V = np.mean(np.array(list(map(lambda x:self.getWordVec(x,1),self.newsList[0].split()))),axis=0)
+            try:
+                self.V = np.mean(np.array(list(map(lambda x:self.getWordVec(x,1),self.newsList[0].split()))),axis=0)
+            except Exception as e:
+                print("Error on parsing list  " + str(e))
+                self.V = np.zeros(100)
         else:
             self.computeTfIdfScore(list(map(lambda x:x.split(),self.newsList)))
 
@@ -83,7 +88,7 @@ class Recommendation(object):
                     self.V = np.mean(tVec,axis=0)
 
         except Exception as e:
-            print(e)
+            print("Dnr : " + str(e))
 
     #4. Get Recommendation
     #Finally this will return recommended index based on cosine distance
@@ -93,10 +98,15 @@ class Recommendation(object):
         latestVec={}
         for key,values in newNews.items():
             x = np.mean(np.array(list(map(lambda x:self.getWordVec(x,1),values.split()))),axis=0)
-            sim = 1 - spatial.distance.cosine(x,self.V)
-            dis = np.arccos(sim)/np.pi
-            latestVec[key] = 1 - dis
+            try:
+                latestVec[key] = spatial.distance.cosine(x,self.V)
+                if math.isnan(latestVec[key]):
+                    latestVec[key] = float("-inf")
+            except Exception as e:
+                print("Dnr : " + str(e))
+            # sim = 1 - spatial.distance.cosine(x,self.V)
+            # dis = np.arccos(sim)/np.pi
+            # latestVec[key] = 1 - dis
         maxRecom = min(len(newNews),n)
         self.recommendation = sorted(latestVec.items(), key=operator.itemgetter(1),reverse=True)[:maxRecom]
-
         return list(map(lambda x:x[0],self.recommendation))
