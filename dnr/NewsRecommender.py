@@ -16,7 +16,7 @@ class Recommendation(object):
         self.model = model
 
     def __version__(self):
-        return '0.9'
+        return '0.9.1'
 
     #get WordVec embeddings and multiply embeddings with respective tfidf score
     #words that doesn't exist in model are not updated yet
@@ -42,7 +42,10 @@ class Recommendation(object):
     # This is an example for nepali text but you can do this for english or anyother language
     def addLatestRead(self,newsList):
         self.newsList = newsList
-        self.computeTfIdfScore(list(map(lambda x:x.split(),self.newsList)))
+        if len(newsList)==1:
+            self.V = np.mean(np.array(list(map(lambda x:self.getWordVec(x,1),self.newsList.split()))),axis=0)
+        else:
+            self.computeTfIdfScore(list(map(lambda x:x.split(),self.newsList)))
 
     #3. Compute tfidfScore
     #this is step by step process to calculate tf-idf score for the documents in user LatestNewsRead from above
