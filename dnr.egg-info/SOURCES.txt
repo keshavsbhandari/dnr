@@ -1,0 +1,9 @@
+README.md
+setup.cfg
+setup.py
+dnr/NewsRecommender.py
+dnr.egg-info/PKG-INFO
+dnr.egg-info/SOURCES.txt
+dnr.egg-info/dependency_links.txt
+dnr.egg-info/requires.txt
+dnr.egg-info/top_level.txt

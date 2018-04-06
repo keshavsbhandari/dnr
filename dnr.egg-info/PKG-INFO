@@ -1,0 +1,20 @@
+Metadata-Version: 1.1
+Name: dnr
+Version: 0.9.1
+Summary: RNN based word2vec implementation for news recommendation
+Home-page: https://github.com/keshavsbhandari/dnr
+Author: Keshav Bhandari
+Author-email: keshav.s.bhandari@gmail.com
+License: copyright
+Download-URL: https://github.com/keshavsbhandari/dnr/archive/master.zip
+Description-Content-Type: UNKNOWN
+Description: 
+            RNN based word2vec implementation for news recommendation
+        
+            Use Recommendation module to make your own content based news recommendation
+            using the fact that reader can news next news provided that they had read certain news
+        
+            More information at: https://github.com/keshavsbhandari/dnr
+        
+Keywords: recommendation,recommendersystem,rnn,lstm,word2vec,gensim
+Platform: UNKNOWN

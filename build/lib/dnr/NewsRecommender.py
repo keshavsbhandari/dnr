@@ -16,7 +16,7 @@ class Recommendation(object):
         self.model = model
 
     def __version__(self):
-        return '0.9.2'
+        return '0.9.1'
 
     #get WordVec embeddings and multiply embeddings with respective tfidf score
     #words that doesn't exist in model are not updated yet
@@ -43,7 +43,7 @@ class Recommendation(object):
     def addLatestRead(self,newsList):
         self.newsList = newsList
         if len(newsList)==1:
-            self.V = np.mean(np.array(list(map(lambda x:self.getWordVec(x,1),self.newsList[0].split()))),axis=0)
+            self.V = np.mean(np.array(list(map(lambda x:self.getWordVec(x,1),self.newsList.split()))),axis=0)
         else:
             self.computeTfIdfScore(list(map(lambda x:x.split(),self.newsList)))
 
