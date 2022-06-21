@@ -28,7 +28,7 @@ setup(name='dnr',
       packages=['dnr'],
       install_requires=[
             'gensim<=3.4.0',
-            'numpy<=1.14.2',
+            'numpy<1.22.1',
             'scipy<=1.0.1'
       ],
       entry_points={}
