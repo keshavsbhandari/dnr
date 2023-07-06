@@ -29,7 +29,7 @@ setup(name='dnr',
       install_requires=[
             'gensim<=3.4.0',
             'numpy<=1.14.2',
-            'scipy<=1.0.1'
+            'scipy<=1.10.0'
       ],
       entry_points={}
       )
